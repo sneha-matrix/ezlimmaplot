@@ -13,11 +13,8 @@ test_that("direction properly specified", {
 test_that("barplot object non-vdiffr", {
   bar_plot<-barplot_pwys(tab=rc, prefix.v = "First3", direction = "Up")
   expect_equal(bar_plot$data["pwy1","Direction"] , rc["pwy1","First3.Direction"])	
-  expect_equal(bar_plot$data["pwy1","neglog10p"] , log10(rc["pwy1" ,"First3.p"])*-1)	
-})
-
-test_that("red color vdiffr", {
-  #verified that bar is of red color 
-  redbar <- function() barplot_pwys(tab=rc, prefix.v = "First3", direction = "Up")
-  vdiffr::expect_doppelganger(title="red bar", fig=redbar)
+  expect_equal(bar_plot$data["pwy1","neglog10p"] , log10(rc["pwy1" ,"First3.p"])*-1)
+  expect_equal(bar_plot$layers[[1]]$aes_params$fill ,"red")	
+  bar_plot_blue<-barplot_pwys(tab=rc, prefix.v = "Last3vsFirst3", direction = "Down")
+  expect_equal(bar_plot_blue$layers[[1]]$aes_params$fill ,"blue")	
 })
